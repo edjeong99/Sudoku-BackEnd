@@ -84,14 +84,14 @@ const removeNumbers = (board, emptyCells) => {
   const generateSudoku = (difficulty = 'easy') => {
     let emptyCells;
     switch (difficulty) {
-      case 'easy':
-        emptyCells = 40;
+      case 'Easy':
+        emptyCells = 3;
         break;
-      case 'medium':
-        emptyCells = 50;
+      case 'Medium':
+        emptyCells = 7;
         break;
-      case 'hard':
-        emptyCells = 60;
+      case 'Hard':
+        emptyCells = 11;
         break;
       default:
         emptyCells = 40;
