@@ -9,7 +9,7 @@ const { createUserProfile, getUserProfile, updateUserProfile } = require('./cont
 
 const app = express();
 const PORT = process.env.PORT || 5000;;
-const allowedOrigins = [process.env.FRONTENDURL,'http://localhost:3000'];
+const allowedOrigins = [process.env.FRONTENDURL,'http://localhost:3000', 'sudoku3.com'];
 
 app.use(cors({
   origin: function(origin, callback){
