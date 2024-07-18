@@ -27,6 +27,13 @@ app.use(bodyParser.json());
 connectDB();
 app.use('/auth', authRoutes);
 
+
+app.get('/'), (req, res) => {
+  const currentTime = new Date().toISOString();
+  res.json({message: `Server is running at ${host}`,
+       currentTime
+  })
+}
 app.get('/generate', (req, res) => {
 
   const difficulty = req.query.difficulty || 'easy';// Get difficulty from query parameters
