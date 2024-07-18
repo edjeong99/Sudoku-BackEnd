@@ -14,6 +14,10 @@ MongoDB
 - Command to start program
   Backend : nodemon server
 
-#AWS Elastic Beanstalk
+<!-- #AWS Elastic Beanstalk
 it is deployed in AWS Elastic Beanstalk
-http://edsudokubackend.us-east-1.elasticbeanstalk.com/
+http://edsudokubackend.us-east-1.elasticbeanstalk.com/ -->
+
+# Deployed in Render
+https://sudoku-backend-wl5r.onrender.com
+-- AWS Beanstalk didn't offer https.  it was hard to implement https.(API gateway, load balancing, etc)
