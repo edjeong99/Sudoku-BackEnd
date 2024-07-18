@@ -5,6 +5,7 @@ const { generateSudoku, solveSudoku } = require("./sudoku");
 const { findNextHint } = require("./findHint");
 const connectDB = require("./util/db");
 const authRoutes = require("./routes/auth");
+require('dotenv').config();
 const {
   createUserProfile,
   getUserProfile,
