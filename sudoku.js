@@ -1,9 +1,4 @@
 
-const DifficultyNumber = Object.freeze({ 
-    EASY: 2, 
-    MEDIUM: 10, 
-    HARD: 20
-}); 
 
 const generateEmptyBoard = () => Array(9).fill(0).map(() => Array(9).fill(0));
 
@@ -85,16 +80,16 @@ const removeNumbers = (board, emptyCells) => {
     let emptyCells;
     switch (difficulty) {
       case 'Easy':
-        emptyCells = 3;
+        emptyCells = process.env.CELL_NUMBERS_EASY;
         break;
       case 'Medium':
-        emptyCells = 7;
+        emptyCells = process.env.CELL_NUMBERS_MEDIUM;
         break;
       case 'Hard':
-        emptyCells = 11;
+        emptyCells = process.env.CELL_NUMBERS_HARD;
         break;
       default:
-        emptyCells = 40;
+        emptyCells = process.env.CELL_NUMBERS_DEFAULT;
     }
 
     const solution = generateEmptyBoard();
