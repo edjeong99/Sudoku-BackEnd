@@ -29,10 +29,14 @@ console.log(newUser)
 };
 
 const signIn = async (req, res) => {
+  console.log("signin in authCon", req.body)
   const { email, password } = req.body;
+ 
+  console.log(email, password)
   try {
     const user = await User.findOne({ email });
     if (!user) {
+      console.log("no user")
       return res.status(404).json({ message: 'User not found' });
     }
 
