@@ -3,7 +3,8 @@ const User = require('../models/userModel');
 
 const saveSudokuTime = async (req, res) => {
   try {
-    const { time } = req.body;
+    const { time, difficulty } = req.body;
+
     const userId = req.user.id;
 
     const user = await User.findById(userId);
@@ -11,7 +12,17 @@ const saveSudokuTime = async (req, res) => {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    user.sudokuTimes.push({ time });
+// update time, avg, etc
+
+console.log(difficulty, user.timeStat.count[difficulty]);
+user.timeStat.avgTime[difficulty] = user.timeStat.avgTime[difficulty] === 0 ? time : ((user.timeStat.count[difficulty] * user.timeStat.avgTime[difficulty]) + time )/(user.timeStat.count[difficulty]+1)
+user.timeStat.avgTime.Total =  user.timeStat.avgTime.Total === 0 ? time : ((user.timeStat.count.Total * user.timeStat.avgTime.Total) + time )/(user.timeStat.count.Total+1)
+
+  user.timeStat.count[difficulty]++;
+  user.timeStat.count.Total++
+
+
+   // user.sudokuTimes.push({ time });
     await user.save();
 
     res.status(200).json({ message: 'Sudoku time saved successfully' });

@@ -19,14 +19,50 @@ const UserSchema = new mongoose.Schema({
   displayName: {
     type: String,
   },
-  sudokuTimeCount:{
-    type:Number,
+  timeStat: {
+    count: {
+      Easy : {
+      type: Number,
+      default: 0,
+    },
+    Medium: {
+      type: Number,
+      default: 0,
+    },
+    Hard: {
+      type: Number,
+      default: 0,
+    },
+    Total :{
+      type: Number,
+      default: 0,
+    }
   },
-  sudokuTimes: [{ 
-    time: Number,
-    date: { type: Date, default: Date.now }
-  }]
+  avgTime: {
+    Easy : {
+    type: Number,
+    default: 0,
+  },
+  Medium: {
+    type: Number,
+    default: 0,
+  },
+  Hard: {
+    type: Number,
+    default: 0,
+  },
+  Total :{
+    type: Number,
+    default: 0,
+  }
+}
+  }
 });
 
 module.exports = mongoose.model('User', UserSchema);
 
+  // sudokuTimes: [{ 
+  //   time: Number,
+  //   difficulty: String,
+  //   date: { type: Date, default: Date.now }
+  // }]
