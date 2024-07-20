@@ -19,6 +19,13 @@ const UserSchema = new mongoose.Schema({
   displayName: {
     type: String,
   },
+  sudokuTimeCount:{
+    type:Number,
+  },
+  sudokuTimes: [{ 
+    time: Number,
+    date: { type: Date, default: Date.now }
+  }]
 });
 
 module.exports = mongoose.model('User', UserSchema);

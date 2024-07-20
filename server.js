@@ -1,16 +1,12 @@
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
-const { generateSudoku, solveSudoku } = require("./sudoku");
+const { generateSudoku } = require("./sudoku");
 const { findNextHint } = require("./findHint");
 const connectDB = require("./util/db");
-const authRoutes = require("./routes/auth");
+const authRoute = require("./routes/authRoute");
+const userRoute = require("./routes/userRoute");
 require('dotenv').config();
-const {
-  createUserProfile,
-  getUserProfile,
-  updateUserProfile,
-} = require("./controllers/userController");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -36,7 +32,8 @@ app.use(
 
 app.use(bodyParser.json());
 connectDB();
-app.use("/auth", authRoutes);
+app.use("/auth", authRoute);
+app.use("/user", userRoute);
 
 app.get('/', (req, res) => {
   const currentTime = new Date().toISOString();
@@ -46,7 +43,7 @@ app.get('/', (req, res) => {
   });
 });
 app.get("/generate", (req, res) => {
-  const difficulty = req.query.difficulty || "easy"; // Get difficulty from query parameters
+  const difficulty = req.query.difficulty || "Easy"; // Get difficulty from query parameters
   const { puzzle, solution } = generateSudoku(difficulty);
   res.json({ puzzle, solution });
 });

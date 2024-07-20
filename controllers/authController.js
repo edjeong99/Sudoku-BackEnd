@@ -48,8 +48,8 @@ const signIn = async (req, res) => {
     const token = jwt.sign({ id: user._id, email: user.email }, process.env.JWT_SECRET, {
       expiresIn: '5h',
     });
-
-    res.status(200).json({ result: user, token });
+console.log(user)
+    res.status(200).json({ token, uid: user.uid, displayName: user.displayName, email: user.email });
   } catch (error) {
     res.status(500).json({ message: 'Something went wrong' });
   }
