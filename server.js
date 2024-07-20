@@ -9,7 +9,7 @@ const userRoute = require("./routes/userRoute");
 require('dotenv').config();
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 8080;
 const allowedOrigins = [
   process.env.FRONTENDURL,
   "http://localhost:3000",
@@ -17,17 +17,19 @@ const allowedOrigins = [
 ];
 
 app.use(
-  cors({
-    origin: function (origin, callback) {
-      if (!origin) return callback(null, true);
-      if (allowedOrigins.indexOf(origin) === -1) {
-        const msg =
-          "The CORS policy for this site does not allow access from the specified Origin.";
-        return callback(new Error(msg), false);
-      }
-      return callback(null, true);
-    },
-  })
+  cors(
+  //   {
+  //   origin: function (origin, callback) {
+  //     if (!origin) return callback(null, true);
+  //     if (allowedOrigins.indexOf(origin) === -1) {
+  //       const msg =
+  //         "The CORS policy for this site does not allow access from the specified Origin.";
+  //       return callback(new Error(msg), false);
+  //     }
+  //     return callback(null, true);
+  //   },
+  // }
+)
 );
 
 app.use(bodyParser.json());
