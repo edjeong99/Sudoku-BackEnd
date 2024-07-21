@@ -6,6 +6,7 @@ const { findNextHint } = require("./util/findHint");
 const connectDB = require("./util/db");
 const authRoute = require("./routes/authRoute");
 const userRoute = require("./routes/userRoute");
+const { getGameTimes } = require("./util/gameRecord");
 require('dotenv').config();
 
 const app = express();
@@ -51,6 +52,8 @@ app.get("/generate", (req, res) => {
 });
 
 app.post("/hint",findNextHint);
+
+app.get('/game-times', getGameTimes);
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
