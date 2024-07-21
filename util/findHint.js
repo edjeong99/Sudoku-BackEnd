@@ -1,4 +1,22 @@
-const findNextHint = (puzzle) => {
+const findNextHint = async  (req, res) => {
+  const { puzzle } = req.body;
+  if (!puzzle) {
+    return res.status(400).json({ error: "Puzzle is required" });
+  }
+  try {
+    const hint = getHint(puzzle);
+    res.json(hint);
+  } catch (error) {
+    console.error("Error generating hint:", error);
+    res.status(500).json({ error: "Error generating hint" });
+  }
+}
+
+
+
+
+
+const getHint = (puzzle) => {
 
     for (let row = 0; row < 9; row++) {
       for (let col = 0; col < 9; col++) {

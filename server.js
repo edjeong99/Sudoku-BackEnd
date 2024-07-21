@@ -2,7 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const { generateSudoku } = require("./sudoku");
-const { findNextHint } = require("./findHint");
+const { findNextHint } = require("./util/findHint");
 const connectDB = require("./util/db");
 const authRoute = require("./routes/authRoute");
 const userRoute = require("./routes/userRoute");
@@ -45,24 +45,13 @@ app.get('/', (req, res) => {
   });
 });
 app.get("/generate", (req, res) => {
-  const difficulty = req.query.difficulty || "Easy"; // Get difficulty from query parameters
-  const { puzzle, solution } = generateSudoku(difficulty);
+ // const difficulty = req.query.difficulty || "Easy"; // Get difficulty from query parameters
+  const { puzzle, solution } = generateSudoku(req.query.difficulty || "Easy");
   res.json({ puzzle, solution });
 });
 
-app.post("/hint", (req, res) => {
-  const { puzzle } = req.body;
-  if (!puzzle) {
-    return res.status(400).json({ error: "Puzzle is required" });
-  }
-  try {
-    const hint = findNextHint(puzzle);
-    res.json(hint);
-  } catch (error) {
-    console.error("Error generating hint:", error);
-    res.status(500).json({ error: "Error generating hint" });
-  }
-});
+app.post("/hint",findNextHint);
+
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
