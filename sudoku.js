@@ -80,16 +80,16 @@ const removeNumbers = (board, emptyCells) => {
     let emptyCells;
     switch (difficulty) {
       case 'Easy':
-        emptyCells = process.env.CELL_NUMBERS_EASY;
+        emptyCells = process.env.CELL_NUMBERS_EASY || 3;
         break;
       case 'Medium':
-        emptyCells = process.env.CELL_NUMBERS_MEDIUM;
+        emptyCells = process.env.CELL_NUMBERS_MEDIUM || 7;
         break;
       case 'Hard':
-        emptyCells = process.env.CELL_NUMBERS_HARD;
+        emptyCells = process.env.CELL_NUMBERS_HARD || 15;
         break;
       default:
-        emptyCells = process.env.CELL_NUMBERS_DEFAULT;
+        emptyCells = process.env.CELL_NUMBERS_DEFAULT || 10;
     }
 
     const solution = generateEmptyBoard();

@@ -21,18 +21,26 @@ const signUp = async (req, res) => {
     });
 console.log(newUser)
     await newUser.save();
+    const token = jwt.sign({ id: user._id, email: user.email }, process.env.JWT_SECRET, {
+      expiresIn: '5h',
+    });
+console.log(user)
+    res.status(200).json({ token, uid: user.uid, displayName: user.displayName, email: user.email, message: 'User created successfully' });
 
-    res.status(201).json({ message: 'User created successfully' });
   } catch (error) {
     res.status(500).json({ message: 'Something went wrong' });
   }
 };
 
 const signIn = async (req, res) => {
+  console.log("signin in authCon", req.body)
   const { email, password } = req.body;
+ 
+  console.log(email, password)
   try {
     const user = await User.findOne({ email });
     if (!user) {
+      console.log("no user")
       return res.status(404).json({ message: 'User not found' });
     }
 
@@ -44,8 +52,8 @@ const signIn = async (req, res) => {
     const token = jwt.sign({ id: user._id, email: user.email }, process.env.JWT_SECRET, {
       expiresIn: '5h',
     });
-
-    res.status(200).json({ result: user, token });
+console.log(user)
+    res.status(200).json({ token, uid: user.uid, displayName: user.displayName, email: user.email });
   } catch (error) {
     res.status(500).json({ message: 'Something went wrong' });
   }

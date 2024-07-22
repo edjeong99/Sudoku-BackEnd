@@ -1,19 +1,16 @@
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
-const { generateSudoku, solveSudoku } = require("./sudoku");
-const { findNextHint } = require("./findHint");
+const { generateSudoku } = require("./sudoku");
+const { findNextHint } = require("./util/findHint");
 const connectDB = require("./util/db");
-const authRoutes = require("./routes/auth");
+const authRoute = require("./routes/authRoute");
+const userRoute = require("./routes/userRoute");
+const { getGameTimes } = require("./util/gameRecord");
 require('dotenv').config();
-const {
-  createUserProfile,
-  getUserProfile,
-  updateUserProfile,
-} = require("./controllers/userController");
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 8080;
 const allowedOrigins = [
   process.env.FRONTENDURL,
   "http://localhost:3000",
@@ -21,22 +18,25 @@ const allowedOrigins = [
 ];
 
 app.use(
-  cors({
-    origin: function (origin, callback) {
-      if (!origin) return callback(null, true);
-      if (allowedOrigins.indexOf(origin) === -1) {
-        const msg =
-          "The CORS policy for this site does not allow access from the specified Origin.";
-        return callback(new Error(msg), false);
-      }
-      return callback(null, true);
-    },
-  })
+  cors(
+  //   {
+  //   origin: function (origin, callback) {
+  //     if (!origin) return callback(null, true);
+  //     if (allowedOrigins.indexOf(origin) === -1) {
+  //       const msg =
+  //         "The CORS policy for this site does not allow access from the specified Origin.";
+  //       return callback(new Error(msg), false);
+  //     }
+  //     return callback(null, true);
+  //   },
+  // }
+)
 );
 
 app.use(bodyParser.json());
 connectDB();
-app.use("/auth", authRoutes);
+app.use("/auth", authRoute);
+app.use("/user", userRoute);
 
 app.get('/', (req, res) => {
   const currentTime = new Date().toISOString();
@@ -46,24 +46,15 @@ app.get('/', (req, res) => {
   });
 });
 app.get("/generate", (req, res) => {
-  const difficulty = req.query.difficulty || "easy"; // Get difficulty from query parameters
-  const { puzzle, solution } = generateSudoku(difficulty);
+ // const difficulty = req.query.difficulty || "Easy"; // Get difficulty from query parameters
+  const { puzzle, solution } = generateSudoku(req.query.difficulty || "Easy");
   res.json({ puzzle, solution });
 });
 
-app.post("/hint", (req, res) => {
-  const { puzzle } = req.body;
-  if (!puzzle) {
-    return res.status(400).json({ error: "Puzzle is required" });
-  }
-  try {
-    const hint = findNextHint(puzzle);
-    res.json(hint);
-  } catch (error) {
-    console.error("Error generating hint:", error);
-    res.status(500).json({ error: "Error generating hint" });
-  }
-});
+app.post("/hint",findNextHint);
+
+app.get('/game-times', getGameTimes);
+
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
