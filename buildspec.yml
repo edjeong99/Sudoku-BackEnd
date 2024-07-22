@@ -4,13 +4,11 @@ phases:
   install:
     runtime-versions:
       nodejs: 20
+  pre_build:
     commands:
       - npm install
  
-  post_build:
-    commands:
-      - zip -r build.zip . -x "node_modules/*"
 artifacts:
   files:
-    - build.zip
-  discard-paths: yes
+    - '**/*'
+  name: myapp-$(date +%Y-%m-%d)
