@@ -7,34 +7,15 @@ const connectDB = require("./util/db");
 const authRoute = require("./routes/authRoute");
 const userRoute = require("./routes/userRoute");
 const { getGameTimes } = require("./util/gameRecord");
+const {getAllTimes } = require("./util/time");
 require('dotenv').config();
 
 const app = express();
 const PORT = process.env.PORT || 8080;
-const allowedOrigins = [
-  process.env.FRONTENDURL,
-  "http://localhost:3000",
-  "sudoku3.com",
-];
 
-app.use(
-  cors(
-  //   {
-  //   origin: function (origin, callback) {
-  //     if (!origin) return callback(null, true);
-  //     if (allowedOrigins.indexOf(origin) === -1) {
-  //       const msg =
-  //         "The CORS policy for this site does not allow access from the specified Origin.";
-  //       return callback(new Error(msg), false);
-  //     }
-  //     return callback(null, true);
-  //   },
-  // }
-)
-);
-
-app.use(bodyParser.json());
 connectDB();
+app.use(  cors());
+app.use(bodyParser.json());
 app.use("/auth", authRoute);
 app.use("/user", userRoute);
 
@@ -46,11 +27,12 @@ app.get('/', (req, res) => {
   });
 });
 app.get("/generate", (req, res) => {
- // const difficulty = req.query.difficulty || "Easy"; // Get difficulty from query parameters
-  const { puzzle, solution } = generateSudoku(req.query.difficulty || "Easy");
+ const difficulty = req.query.difficulty || "Easy"; // Get difficulty from query parameters
+  const { puzzle, solution } = generateSudoku(difficulty);
   res.json({ puzzle, solution });
 });
 
+app.get("/getAllTimes", getAllTimes);
 app.post("/hint",findNextHint);
 
 app.get('/game-times', getGameTimes);

@@ -4,16 +4,16 @@ const CompletionTime = require("../models/CompletionTimeModel");
 const saveSudokuTime = async (req, res) => {
   try {
     const { time, difficulty } = req.body;
+console.log("ssaveSudokuTime in userController req.user = ", req.user)
+    const uid = req.user.id;
 
-    const userId = req.user.id;
-
-    const user = await User.findById(userId);
+    const user = await User.findById(uid);
     if (!user) {
       return res.status(404).json({ message: "User not found" });
       const Game = mongoose.model("Game", GameSchema);
     }
     // update time, avg, etc
-    console.log(difficulty, user.timeStat.count[difficulty]);
+   // console.log(difficulty, user.timeStat.count[difficulty]);
     user.timeStat.avgTime[difficulty] =
       user.timeStat.avgTime[difficulty] === 0
         ? time
@@ -33,21 +33,13 @@ const saveSudokuTime = async (req, res) => {
     await user.save();
 
     const newTime = new CompletionTime({
-      userId,
+      uid,
       difficulty,
-      completionTime : time
+      completionTime: time,
     });
     await newTime.save();
 
-
-    const allTimes = await CompletionTime.find({difficulty: difficulty})
-                                  .sort({completionTime: 1})
-                                  .select('completionTime');
-      
-    console.log(allTimes)
-     
-    res.status(200).json({ allTimes: allTimes.map(game => game.completionTime),
-       message: "Sudoku time saved successfully" });
+    res.status(200).json({ message: "Sudoku time saved successfully" });
   } catch (error) {
     console.error("Error saving Sudoku time:", error);
     res.status(500).json({ message: "Error saving Sudoku time" });

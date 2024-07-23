@@ -6,7 +6,7 @@ const getGameTimes = async (req, res) => {
                                   .sort({completionTime: 1})
                                   .select('completionTime');
       
-        console.log(allTimes)
+    //    console.log(allTimes)
       res.json({
         allTimes: allTimes.map(game => game.completionTime),
       });

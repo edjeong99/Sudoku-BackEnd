@@ -18,6 +18,7 @@ const UserSchema = new mongoose.Schema({
   },
   displayName: {
     type: String,
+    default:'Player'
   },
   timeStat: {
     count: {

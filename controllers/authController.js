@@ -19,12 +19,12 @@ const signUp = async (req, res) => {
       password: hashedPassword,
       displayName,
     });
-console.log(newUser)
+//console.log(newUser)
     await newUser.save();
     const token = jwt.sign({ id: user._id, email: user.email }, process.env.JWT_SECRET, {
       expiresIn: '5h',
     });
-console.log(user)
+console.log("Singup user = " ,user)
     res.status(200).json({ token, uid: user.uid, displayName: user.displayName, email: user.email, message: 'User created successfully' });
 
   } catch (error) {
@@ -36,7 +36,7 @@ const signIn = async (req, res) => {
   console.log("signin in authCon", req.body)
   const { email, password } = req.body;
  
-  console.log(email, password)
+  console.log("Signin in auth email, pass ", email, password)
   try {
     const user = await User.findOne({ email });
     if (!user) {
@@ -52,8 +52,8 @@ const signIn = async (req, res) => {
     const token = jwt.sign({ id: user._id, email: user.email }, process.env.JWT_SECRET, {
       expiresIn: '5h',
     });
-console.log(user)
-    res.status(200).json({ token, uid: user.uid, displayName: user.displayName, email: user.email });
+console.log("Signin auth user = ", user)
+    res.status(200).json({ token, user: user });
   } catch (error) {
     res.status(500).json({ message: 'Something went wrong' });
   }
