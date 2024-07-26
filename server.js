@@ -2,7 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const { generateSudoku } = require("./sudoku");
-const { findNextHint } = require("./util/findHint");
+const { findNextHint} = require("./util/findHint");
 const connectDB = require("./util/db");
 const authRoute = require("./routes/authRoute");
 const userRoute = require("./routes/userRoute");
@@ -36,6 +36,12 @@ app.get("/getAllTimes", getAllTimes);
 app.post("/hint",findNextHint);
 
 app.get('/game-times', getGameTimes);
+
+// router.post('/chat', async (req, res) => {
+//   const { message } = req.body;
+//   const response = await processChatMessage(message);
+//   res.json({ response });
+// });
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);

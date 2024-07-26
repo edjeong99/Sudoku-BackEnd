@@ -1,5 +1,5 @@
-const mongoose = require('mongoose');
-const { v4: uuidv4 } = require('uuid');  // Add uuid library for generating unique ids
+const mongoose = require("mongoose");
+const { v4: uuidv4 } = require("uuid"); // Add uuid library for generating unique ids
 
 const UserSchema = new mongoose.Schema({
   uid: {
@@ -16,54 +16,54 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  displayName: {
+  nickName: {
     type: String,
-    default:'Player'
+    default: "Player",
   },
   timeStat: {
     count: {
-      Easy : {
-      type: Number,
-      default: 0,
+      Easy: {
+        type: Number,
+        default: 0,
+      },
+      Medium: {
+        type: Number,
+        default: 0,
+      },
+      Hard: {
+        type: Number,
+        default: 0,
+      },
+      Total: {
+        type: Number,
+        default: 0,
+      },
     },
-    Medium: {
-      type: Number,
-      default: 0,
+    avgTime: {
+      Easy: {
+        type: Number,
+        default: 0,
+      },
+      Medium: {
+        type: Number,
+        default: 0,
+      },
+      Hard: {
+        type: Number,
+        default: 0,
+      },
+      Total: {
+        type: Number,
+        default: 0,
+      },
     },
-    Hard: {
-      type: Number,
-      default: 0,
-    },
-    Total :{
-      type: Number,
-      default: 0,
-    }
   },
-  avgTime: {
-    Easy : {
-    type: Number,
-    default: 0,
-  },
-  Medium: {
-    type: Number,
-    default: 0,
-  },
-  Hard: {
-    type: Number,
-    default: 0,
-  },
-  Total :{
-    type: Number,
-    default: 0,
-  }
-}
-  }
 });
 
-module.exports = mongoose.model('User', UserSchema);
+module.exports = mongoose.model("User", UserSchema);
 
-  // sudokuTimes: [{ 
-  //   time: Number,
-  //   difficulty: String,
-  //   date: { type: Date, default: Date.now }
-  // }]
+// sudokuTimes: [{
+//   time: Number,
+//   difficulty: String,
+//   date: { type: Date, default: Date.now }
+// }]

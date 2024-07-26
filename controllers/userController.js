@@ -4,7 +4,7 @@ const CompletionTime = require("../models/CompletionTimeModel");
 const saveSudokuTime = async (req, res) => {
   try {
     const { time, difficulty } = req.body;
-console.log("ssaveSudokuTime in userController req.user = ", req.user)
+    console.log("ssaveSudokuTime in userController req.user = ", req.user);
     const uid = req.user.id;
 
     const user = await User.findById(uid);
@@ -13,7 +13,7 @@ console.log("ssaveSudokuTime in userController req.user = ", req.user)
       const Game = mongoose.model("Game", GameSchema);
     }
     // update time, avg, etc
-   // console.log(difficulty, user.timeStat.count[difficulty]);
+    // console.log(difficulty, user.timeStat.count[difficulty]);
     user.timeStat.avgTime[difficulty] =
       user.timeStat.avgTime[difficulty] === 0
         ? time
@@ -47,16 +47,16 @@ console.log("ssaveSudokuTime in userController req.user = ", req.user)
 };
 
 const createUserProfile = async (req, res) => {
-  const { uid, email, displayName } = req.body;
+  const { uid, email, nickName } = req.body;
 
   try {
     let user = await User.findOne({ uid });
     if (user) {
       user.email = email;
-      user.displayName = displayName || "";
+      user.nickName = nickName || "";
       await user.save();
     } else {
-      user = new User({ uid, email, displayName });
+      user = new User({ uid, email, nickName });
       await user.save();
     }
     res
