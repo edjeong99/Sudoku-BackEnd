@@ -5,15 +5,15 @@ const saveSudokuTime = async (req, res) => {
   try {
     const { time, difficulty } = req.body;
     console.log("ssaveSudokuTime in userController req.user = ", req.user);
-    const uid = req.user.id;
+    const _id = req.user._id;
 
-    const user = await User.findById(uid);
+    const user = await User.findById(_id);
     if (!user) {
       return res.status(404).json({ message: "User not found" });
       const Game = mongoose.model("Game", GameSchema);
     }
     // update time, avg, etc
-    // console.log(difficulty, user.timeStat.count[difficulty]);
+     console.log(difficulty, user.timeStat.count[difficulty]);
     user.timeStat.avgTime[difficulty] =
       user.timeStat.avgTime[difficulty] === 0
         ? time
@@ -31,13 +31,14 @@ const saveSudokuTime = async (req, res) => {
 
     // user.sudokuTimes.push({ time });
     await user.save();
-
+console.log("user saved successfully in sudokuSaveTime")
     const newTime = new CompletionTime({
-      uid,
+      _id,
       difficulty,
       completionTime: time,
     });
     await newTime.save();
+    console.log("newTime saved successfully in sudokuSaveTime")
 
     res.status(200).json({ message: "Sudoku time saved successfully" });
   } catch (error) {

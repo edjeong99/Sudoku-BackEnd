@@ -19,23 +19,26 @@ const signUp = async (req, res) => {
       password: hashedPassword,
       nickName,
     });
-    //console.log(newUser)
+    
     await newUser.save();
+    console.log("new user saved", newUser);
+    console.log("JWT_SECRET = ", process.env.JWT_SECRET);
+    console.log(newUser.uid,  newUser.email );
     const token = jwt.sign(
-      { id: user._id, email: user.email },
+      { _id: newUser._id, email: newUser.email },
       process.env.JWT_SECRET,
       {
         expiresIn: "5h",
       }
     );
-    console.log("Singup user = ", user);
+    console.log("Singup user = ", newUser);
     res
       .status(200)
       .json({
         token,
-        uid: user.uid,
-        nickName: user.nickName,
-        email: user.email,
+        _id: newUser._id,
+        nickName: newUser.nickName,
+        email: newUser.email,
         message: "User created successfully",
       });
   } catch (error) {
@@ -61,7 +64,7 @@ const signIn = async (req, res) => {
     }
 
     const token = jwt.sign(
-      { id: user._id, email: user.email },
+      { _id: user._id, email: user.email },
       process.env.JWT_SECRET,
       {
         expiresIn: "5h",
