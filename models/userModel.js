@@ -20,7 +20,7 @@ const UserSchema = new mongoose.Schema({
     type: String,
     default: "Player",
   },
-  gamePlayed: {
+  numOfPlayed: {
     Easy: {
       type: Number,
       default: 0,
@@ -38,43 +38,42 @@ const UserSchema = new mongoose.Schema({
       default: 0,
     },
   },
-    avgTime: {
-      Easy: {
-        type: Number,
-        default: 0,
-      },
-      Medium: {
-        type: Number,
-        default: 0,
-      },
-      Hard: {
-        type: Number,
-        default: 0,
-      },
-      Total: {
-        type: Number,
-        default: 0,
-      },
+  avgTime: {
+    Easy: {
+      type: Number,
+      default: 0,
     },
-    Time: {
-      Easy: {
-        type: Number,
-        default: 0,
-      },
-      Medium: {
-        type: Number,
-        default: 0,
-      },
-      Hard: {
-        type: Number,
-        default: 0,
-      },
-      Total: {
-        type: Number,
-        default: 0,
-      },
+    Medium: {
+      type: Number,
+      default: 0,
     },
-
+    Hard: {
+      type: Number,
+      default: 0,
+    },
+    Total: {
+      type: Number,
+      default: 0,
+    },
+  },
+  bestTime: {
+    Easy: {
+      type: Number,
+      default: 0,
+    },
+    Medium: {
+      type: Number,
+      default: 0,
+    },
+    Hard: {
+      type: Number,
+      default: 0,
+    },
+    Total: {
+      type: Number,
+      default: 0,
+    },
+  },
 });
 
 module.exports = mongoose.model("User", UserSchema);
