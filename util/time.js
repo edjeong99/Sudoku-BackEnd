@@ -1,10 +1,10 @@
 
-const CompletionTime = require("../models/CompletionTimeModel");
+const GameTimes = require("../models/GameTimesModel");
 
 const getAllTimes = async (req, res) => {
     const difficulty = req.query.difficulty || "Easy"; 
     try {
-const allTimes = await CompletionTime.find({difficulty: difficulty})
+const allTimes = await GameTimes.find({difficulty: difficulty})
 .sort({completionTime: 1})
 .select('completionTime');
 

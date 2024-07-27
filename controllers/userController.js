@@ -1,5 +1,5 @@
 const User = require("../models/userModel");
-const CompletionTime = require("../models/CompletionTimeModel");
+const CompletionTime = require("../models/GameTimesModel");
 
 const saveSudokuTime = async (req, res) => {
   try {

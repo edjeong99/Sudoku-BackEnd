@@ -20,25 +20,24 @@ const UserSchema = new mongoose.Schema({
     type: String,
     default: "Player",
   },
-  timeStat: {
-    count: {
-      Easy: {
-        type: Number,
-        default: 0,
-      },
-      Medium: {
-        type: Number,
-        default: 0,
-      },
-      Hard: {
-        type: Number,
-        default: 0,
-      },
-      Total: {
-        type: Number,
-        default: 0,
-      },
+  gamePlayed: {
+    Easy: {
+      type: Number,
+      default: 0,
     },
+    Medium: {
+      type: Number,
+      default: 0,
+    },
+    Hard: {
+      type: Number,
+      default: 0,
+    },
+    Total: {
+      type: Number,
+      default: 0,
+    },
+  },
     avgTime: {
       Easy: {
         type: Number,
@@ -57,7 +56,25 @@ const UserSchema = new mongoose.Schema({
         default: 0,
       },
     },
-  },
+    Time: {
+      Easy: {
+        type: Number,
+        default: 0,
+      },
+      Medium: {
+        type: Number,
+        default: 0,
+      },
+      Hard: {
+        type: Number,
+        default: 0,
+      },
+      Total: {
+        type: Number,
+        default: 0,
+      },
+    },
+
 });
 
 module.exports = mongoose.model("User", UserSchema);
