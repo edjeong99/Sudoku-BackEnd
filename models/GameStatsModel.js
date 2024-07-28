@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const GameStatsSchema = new mongoose.Schema({
-  _id: String,
+
   "numOfPlayed": {
     Easy: {
       type: Number,

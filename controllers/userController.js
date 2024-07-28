@@ -1,25 +1,30 @@
 const User = require("../models/userModel");
 const GameTimes = require("../models/GameTimesModel");
-const {updatePlayerStat, updateGameStat } = require("../util/time");
+const {updatePlayerStat, updateGameStats, updateGameTimes } = require("../util/time");
 
 const updateStats = async (req, res) => {
+
   try {
-    const { time, difficulty } = req.body;
-    console.log("ssaveSudokuTime in userController req.user = ", req.user);
-    const _id = req.user._id;
+    const { time, difficulty, userId } = req.body;
+    console.log("ssaveSudokuTime in userController  ",time, difficulty, userId);
+    let user;
 
-    await updatePlayerStat(_id, difficulty, time)
-    await updateGameStat(difficulty, time)
+    // Execute all asynchronous functions in parallel
+    const promises = [];
 
-    // const newTime = new CompletionTime({
-    //   _id,
-    //   difficulty,
-    //   completionTime: time,
-    // });
-    // await newTime.save();
-    // console.log("newTime saved successfully in sudokuSaveTime")
+    if (userId) {
+      promises.push(
+        updatePlayerStat(userId, difficulty, time).then((result) => {
+          user = result;
+        })
+      );
+    }
 
-    res.status(200).json({ message: "Sudoku time saved successfully" });
+    promises.push(updateGameStats(difficulty, time));
+    promises.push(updateGameTimes(userId, difficulty, time));
+    await Promise.all(promises);
+
+    res.status(200).json({ user:user, message: "Sudoku time saved successfully" });
   } catch (error) {
     console.error("Error saving Sudoku time:", error);
     res.status(500).json({ message: "Error saving Sudoku time" });

@@ -37,16 +37,16 @@ const updatePlayerStat = async (_id, difficulty, time) => {
     user.bestTime.Total <= time ? user.bestTime.Total : time;
 
   await user.save();
+  return user;
 };
 
-const updateGameStat = async (difficulty, time) => {
+const updateGameStats = async (difficulty, time) => {
  
         let gameStats = await GameStats.findOne();
         if (!gameStats) {
-            gameStats = new GameStats({ _id: 'global_stats' });        }
+            gameStats = new GameStats();        }
         console.log(gameStats);
-        gameStats.numOfPlayed[difficulty]++
-        gameStats.numOfPlayed.total++
+      
 
 
     // upate difficulty avg time
@@ -65,7 +65,8 @@ const updateGameStat = async (difficulty, time) => {
           (gameStats.numOfPlayed.Total + 1);
     console.log("line 26 ", gameStats.avgTime.Total);
   
-
+    gameStats.numOfPlayed[difficulty]++
+    gameStats.numOfPlayed.Total++
   console.log("line 70", gameStats)
     // // update bestTime
     // user.bestTime[difficulty] = user.bestTime[difficulty] === 0 ? time :
@@ -97,4 +98,16 @@ const getAllTimes = async (req, res) => {
   }
 };
 
-module.exports = { getAllTimes, updatePlayerStat, updateGameStat };
+const updateGameTimes = async (_id, difficulty, time) => {
+
+
+    const newGameTime = new GameTimes({
+        playerID : _id,
+        difficulty,
+        completionTime: time,
+      });
+      
+      await newGameTime.save();
+
+}
+module.exports = { getAllTimes, updatePlayerStat, updateGameStats, updateGameTimes };
