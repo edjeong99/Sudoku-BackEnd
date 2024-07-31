@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const GameTimesSchema = new mongoose.Schema({
-  _id: String,
+
   "playerID":String,
   difficulty: String,
   completionTime: Number,

@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
 
 const GameStatsSchema = new mongoose.Schema({
-  _id: String,
-  "totalGamesCompleted": {
+
+  "numOfPlayed": {
     Easy: {
       type: Number,
       default: 0,
@@ -20,8 +20,8 @@ const GameStatsSchema = new mongoose.Schema({
       default: 0,
     },
   },
-  "totalCompletionTime": Number,
-  "averageCompletionTime": {
+  "completionTime": Number,
+  "avgTime": {
     Easy: {
       type: Number,
       default: 0,
@@ -41,4 +41,4 @@ const GameStatsSchema = new mongoose.Schema({
   }
 });
 
-module.exports = mongoose.model("GameStats", GameTimeSchema);
+module.exports = mongoose.model("GameStats", GameStatsSchema);
