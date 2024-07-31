@@ -15,14 +15,25 @@ MongoDB
   Backend : nodemon server
 
 # Deployment
+
 - Frontend : AWS Amplify
 - BackEnd : AWS Elastic Beanstalk & API Gateway
-   Backend app is deployed in Beanstalk.  Amplify only connects to HTTPS but Beanstalk doesn't offer HTTPS.  So use API Gateway to get connected HTTPS and then to Beanstalk.
+  Backend app is deployed in Beanstalk. Amplify provide HTTPS endpoint which Beanstalk doesn't offer HTTPS. For CI/CD, use AWS CodePipeline and AWS CodeBuild.
 
-Note : it was way harder than expected to deploy Beanstalk and connect to API.  Not much useful material to learn proper way.
+Note : it was way harder than expected to connect all AWS services and make them work. not enough materials...
 
+# DB setting
 
+- use mongodb in cloud.mongodb.com
+  Collections
+  User : uid, email, password, nickName
+  timeStat: {
+  count: {Easy, Medium, Hard, Total},
+  avgTime: {Easy, Medium, Hard, Total}
+  }
 
-# Deployed in Render
+CompletionTimes : uid, difficulty, completionTime, completedAt
+
+# before it was Deployed in Render
+
 https://sudoku-backend-wl5r.onrender.com
--- AWS Beanstalk didn't offer https.  it was hard to implement https.(API gateway, load balancing, etc)

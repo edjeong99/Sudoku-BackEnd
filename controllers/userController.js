@@ -1,19 +1,19 @@
 const User = require("../models/userModel");
-const CompletionTime = require("../models/CompletionTimeModel");
+const CompletionTime = require("../models/GameTimesModel");
 
 const saveSudokuTime = async (req, res) => {
   try {
     const { time, difficulty } = req.body;
+    console.log("ssaveSudokuTime in userController req.user = ", req.user);
+    const _id = req.user._id;
 
-    const userId = req.user.id;
-
-    const user = await User.findById(userId);
+    const user = await User.findById(_id);
     if (!user) {
       return res.status(404).json({ message: "User not found" });
       const Game = mongoose.model("Game", GameSchema);
     }
     // update time, avg, etc
-    console.log(difficulty, user.timeStat.count[difficulty]);
+     console.log(difficulty, user.timeStat.count[difficulty]);
     user.timeStat.avgTime[difficulty] =
       user.timeStat.avgTime[difficulty] === 0
         ? time
@@ -31,23 +31,16 @@ const saveSudokuTime = async (req, res) => {
 
     // user.sudokuTimes.push({ time });
     await user.save();
-
+console.log("user saved successfully in sudokuSaveTime")
     const newTime = new CompletionTime({
-      userId,
+      _id,
       difficulty,
-      completionTime : time
+      completionTime: time,
     });
     await newTime.save();
+    console.log("newTime saved successfully in sudokuSaveTime")
 
-
-    const allTimes = await CompletionTime.find({difficulty: difficulty})
-                                  .sort({completionTime: 1})
-                                  .select('completionTime');
-      
-    console.log(allTimes)
-     
-    res.status(200).json({ allTimes: allTimes.map(game => game.completionTime),
-       message: "Sudoku time saved successfully" });
+    res.status(200).json({ message: "Sudoku time saved successfully" });
   } catch (error) {
     console.error("Error saving Sudoku time:", error);
     res.status(500).json({ message: "Error saving Sudoku time" });
@@ -55,16 +48,16 @@ const saveSudokuTime = async (req, res) => {
 };
 
 const createUserProfile = async (req, res) => {
-  const { uid, email, displayName } = req.body;
+  const { uid, email, nickName } = req.body;
 
   try {
     let user = await User.findOne({ uid });
     if (user) {
       user.email = email;
-      user.displayName = displayName || "";
+      user.nickName = nickName || "";
       await user.save();
     } else {
-      user = new User({ uid, email, displayName });
+      user = new User({ uid, email, nickName });
       await user.save();
     }
     res
