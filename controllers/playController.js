@@ -9,6 +9,7 @@ const getNewSudoku = async (req, res) => {
 
 const getHint = async  (req, res) => {
     const { puzzle } = req.body;
+    
     if (!puzzle) {
       return res.status(400).json({ error: "Puzzle is required" });
     }
